@@ -3,18 +3,24 @@ import java.awt.Graphics;
 //import java.awt.event.KeyEvent;
 //import java.awt.event.KeyListener;
 
-public class Square  {
-	int squareX =20;
-	int squareY =100;
+public class Square extends SquareGameObject {
+
+	public Square(int x, int y, int width, int height) {
+		super(x, y, width, height);
+		// TODO Auto-generated constructor stub
+	}
+	
 	boolean isMoving = false;
 	
 	void drop() {
-		squareY++;
+		if(!isMoving) {
+		y++;
+		}
 	}
 	void draw(Graphics g) {
+		super.draw(g);
 		g.setColor(Color.GREEN);
-		g.fillRect(squareX, squareY, 50, 50);	
+		g.fillRect(x, y, 50, 50);	
 	}
-
 
 }

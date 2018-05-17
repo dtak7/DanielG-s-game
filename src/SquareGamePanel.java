@@ -15,12 +15,14 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 	final int END_STATE = 2;
 	int currentState = MENU_STATE;
 	Font titleFont = new Font("Arial", Font.PLAIN, 48);
-	Square square = new Square();
+	Square square = new Square(20, 100, 50, 50);
 	Timer timer = new Timer(1000 / 60, (ActionListener) this);
-	Barriers barrier = new Barriers();
-
+	Barriers barrier = new Barriers(200, 280, 50, 200);
+	
 	SquareGamePanel() {
 		timer.start();
+		// this.square = square;
+		/// this.barrier= barrier;
 	}
 
 	public void paintComponent(Graphics g) {
@@ -31,7 +33,14 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 			drawGameState(g);
 
 		} else if (currentState == END_STATE) {
+
 			drawEndState(g);
+		}
+	}
+
+	void endGame() {
+		if (!square.isAlive) {
+			currentState = END_STATE;
 		}
 	}
 
@@ -87,42 +96,62 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 		// moving code
 
 		else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			square.squareX += 3;
-			square.isMoving=true;
+			square.x += 3;
+			// square.isMoving=true;
 			repaint();
 		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			square.squareX -= 3;
-			square.isMoving=true;
+			square.x -= 3;
+			// square.isMoving=true;
 			repaint();
 		} else if (e.getKeyCode() == KeyEvent.VK_UP) {
-			square.squareY -= 3;
-			square.isMoving=true;
+			square.y -= 3;
+			square.isMoving = true;
 			repaint();
 		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			square.squareY += 3;
-			square.isMoving=true;
+			square.y += 3;
+			square.isMoving = true;
 			repaint();
+		} else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+			currentState++;
+			if (currentState > END_STATE) {
+				System.out.println("square");
+				square = new Square(250, 700, 50, 50);
+
+				currentState = MENU_STATE;
+			}
+		}
+		if(currentState==GAME_STATE) {
+		checkCollision();
 		}
 	}
-
+	void checkCollision(){
+		barrier.update();
+		square.update();
+		
+		if(square.collisionBox.intersects(barrier.collisionBox)) {
+			System.out.println("death");
+			square.isAlive=false;
+			endGame();
+		
+		}
+	}
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		 if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			square.isMoving=false;
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			square.isMoving = false;
 			repaint();
 		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			square.isMoving=false;
+			square.isMoving = false;
 			repaint();
 		} else if (e.getKeyCode() == KeyEvent.VK_UP) {
-			square.isMoving=false;
+			square.isMoving = false;
 			repaint();
 		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			square.isMoving=false;
+			square.isMoving = false;
 			repaint();
 		}
 	}
-	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -130,7 +159,8 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 		// Timer
 
 		square.drop();
+		checkCollision();
 		repaint();
-		
+	
 	}
 }
