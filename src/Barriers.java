@@ -14,7 +14,7 @@ public Barriers(int x, int y, int width, int height) {
 void draw (Graphics g){
 	super.draw(g);
 	g.setColor(Color.BLUE);
-	g.fillRect(x, y, 70, 300);
+	g.fillRect(x, y, width, height);
 	
 }
 }

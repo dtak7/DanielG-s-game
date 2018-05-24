@@ -20,7 +20,7 @@ public class Square extends SquareGameObject {
 	void draw(Graphics g) {
 		super.draw(g);
 		g.setColor(Color.GREEN);
-		g.fillRect(x, y, 50, 50);	
+		g.fillRect(x, y, 25, 25);	
 	}
 
 }
