@@ -18,18 +18,23 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 	ArrayList<Barriers> barriers = new ArrayList<Barriers>();
 	int currentState = MENU_STATE;
 	Font titleFont = new Font("Arial", Font.PLAIN, 48);
+	Font infoFont = new Font("Arial", Font.PLAIN, 20);
 	Square square = new Square(20, 100, 25, 25);
 	Timer timer = new Timer(1000 / 60, (ActionListener) this);
+	Border border = new Border(0, 0, 0, 700);
+	Timer borderTimer = new Timer(100000,(border));
 	Barriers barrier = new Barriers(90, 120, 50, 700);
 	Barriers barrier2 = new Barriers(190, 0, 240, 470);
-	Barriers barrier3 = new Barriers(480,120,50,490);
-	Barriers barrier4 = new Barriers(580,130,50,25);
-	Barriers barrier5 = new Barriers(540,230,50,25);
-	Barriers barrier6 = new Barriers(620,330,50,25);
+	Barriers barrier3 = new Barriers(480, 120, 50, 490);
+	Barriers barrier4 = new Barriers(580, 130, 50, 25);
+	Barriers barrier5 = new Barriers(540, 230, 50, 25);
+	Barriers barrier6 = new Barriers(620, 330, 50, 25);
 	Lander lander = new Lander(600, 500, 50, 50);
+	
 
 	SquareGamePanel() {
 		timer.start();
+		borderTimer.start();
 		barriers.add(barrier);
 		barriers.add(barrier2);
 		barriers.add(barrier3);
@@ -48,10 +53,10 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 		} else if (currentState == END_STATE) {
 
 			drawEndState(g);
-		}else if(currentState==WINNING_STATE) {
+		} else if (currentState == WINNING_STATE) {
 			drawWinningState(g);
 		}
-		
+
 	}
 
 	void endGame() {
@@ -59,9 +64,11 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 			currentState = END_STATE;
 		}
 	}
+
 	private void drawWinningState(Graphics g) {
 		g.drawString("You Won :o", 350, 300);
 	}
+
 	private void drawEndState(Graphics g) {
 		// TODO Auto-generated method stub
 		g.setColor(Color.yellow);
@@ -82,6 +89,7 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 			b.draw(g);
 		}
 		lander.draw(g);
+		border.draw(g);
 	}
 
 	private void drawMenuState(Graphics g) {
@@ -89,7 +97,11 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 		g.setColor(Color.black);
 		g.fillRect(0, 0, 700, 600);
 		g.setColor(Color.GRAY);
-		g.drawString("Square Survivor", 300, 300);
+		g.setFont(titleFont);
+		g.drawString("Square Survivor", 250, 300);
+		g.setFont(infoFont);
+		g.drawString("use arrow keys to move", 300, 400);
+		g.drawString("enter to restart", 300, 450);
 
 	}
 
@@ -110,7 +122,10 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 			if (currentState > END_STATE) {
 
 				square = new Square(20, 100, 25, 25);
-
+				border.width=0;
+				borderTimer.stop();
+				border.isActive=false;
+				
 				currentState = MENU_STATE;
 				System.out.println(currentState);
 				repaint();
@@ -158,6 +173,7 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 			b.update();
 		}
 		square.update();
+		border.update();
 		for (Barriers b : barriers) {
 
 			if (square.collisionBox.intersects(b.collisionBox)) {
@@ -168,8 +184,12 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 			}
 		}
 		if (square.collisionBox.intersects(lander.collisionBox)) {
-			currentState=WINNING_STATE;
-			
+			currentState = WINNING_STATE;
+
+		}
+		if (border.isActive&&square.collisionBox.intersects(border.collisionBox)) {
+			square.isAlive=false;
+			endGame();
 		}
 	}
 
@@ -195,7 +215,7 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		// Timer
-
+		
 		square.drop();
 		checkCollision();
 		repaint();
