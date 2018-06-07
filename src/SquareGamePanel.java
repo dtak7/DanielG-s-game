@@ -15,14 +15,15 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 	final int GAME_STATE = 1;
 	final int END_STATE = 2;
 	final int WINNING_STATE = 3;
+	final int INFO_STATE = 4;
 	ArrayList<Barriers> barriers = new ArrayList<Barriers>();
 	int currentState = MENU_STATE;
 	Font titleFont = new Font("Arial", Font.PLAIN, 48);
 	Font infoFont = new Font("Arial", Font.PLAIN, 20);
-	Square square = new Square(20, 100, 25, 25);
+	Square square = new Square(20, 100);
 	Timer timer = new Timer(1000 / 60, (ActionListener) this);
 	Border border = new Border(0, 0, 0, 700);
-	Timer borderTimer = new Timer(100000,(border));
+	Timer borderTimer = new Timer(100,(border));
 	Barriers barrier = new Barriers(90, 120, 50, 700);
 	Barriers barrier2 = new Barriers(190, 0, 240, 470);
 	Barriers barrier3 = new Barriers(480, 120, 50, 490);
@@ -56,6 +57,9 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 		} else if (currentState == WINNING_STATE) {
 			drawWinningState(g);
 		}
+		else if(currentState==INFO_STATE) {
+			drawInfoState(g);
+		}
 
 	}
 
@@ -67,6 +71,16 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 
 	private void drawWinningState(Graphics g) {
 		g.drawString("You Won :o", 350, 300);
+	}
+	private void drawInfoState(Graphics g) {
+		g.setColor(Color.GRAY);
+		g.drawRect(0, 0, SquareSurvivor.frameWidth, SquareSurvivor.frameHeight);
+		g.setColor(Color.BLACK);
+		g.setFont(infoFont);
+		g.drawString("watch out for the border, don't dillydally", 300, 350);
+		g.drawString("use arrow keys to move", 300, 400);
+		g.drawString("enter to restart", 300, 450);
+		g.drawString("hit ENTER to proceed to the game", 300, 500);
 	}
 
 	private void drawEndState(Graphics g) {
@@ -90,7 +104,12 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 		}
 		lander.draw(g);
 		border.draw(g);
+		g.setFont(infoFont);
+		String count = String.valueOf(border.countdown/100);
+		//count= count.substring(0, 4);
+		g.drawString(count, SquareSurvivor.frameWidth-650, 20);
 	}
+
 
 	private void drawMenuState(Graphics g) {
 		// TODO Auto-generated method stub
@@ -100,8 +119,7 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 		g.setFont(titleFont);
 		g.drawString("Square Survivor", 250, 300);
 		g.setFont(infoFont);
-		g.drawString("use arrow keys to move", 300, 400);
-		g.drawString("enter to restart", 300, 450);
+		g.drawString("hit SHIFT to see further instructions", 300, 450);
 
 	}
 
@@ -121,7 +139,7 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 			currentState++;
 			if (currentState > END_STATE) {
 
-				square = new Square(20, 100, 25, 25);
+				square = new Square(20, 100);
 				border.width=0;
 				borderTimer.stop();
 				border.isActive=false;
@@ -131,21 +149,25 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 				repaint();
 			}
 		}
+		else if (e.getKeyCode()==KeyEvent.VK_SHIFT) {
+			currentState = 4;
+			repaint();
+		}
 		// moving code
-
-		else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+		else {
+		 if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			square.x += 3;
 			// square.isMoving=true;
 			repaint();
-		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+		}  if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 			square.x -= 3;
 			// square.isMoving=true;
 			repaint();
-		} else if (e.getKeyCode() == KeyEvent.VK_UP) {
+		}  if (e.getKeyCode() == KeyEvent.VK_UP) {
 			square.y -= 3;
 			square.isMoving = true;
 			repaint();
-		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+		}  if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 			square.y += 3;
 			square.isMoving = true;
 			repaint();
@@ -155,6 +177,7 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 			checkCollision();
 			checkBounds();
 		}
+	}
 	}
 
 	void checkBounds() {

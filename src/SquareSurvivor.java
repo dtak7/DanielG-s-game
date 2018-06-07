@@ -4,8 +4,8 @@ public class SquareSurvivor {
 	JFrame frame;
 	Square square;
 	SquareGamePanel panel;
-	final int frameX =700;
-	final int frameY=600;
+	final static int frameWidth =700;
+	final static int frameHeight=600;
 	
 	public static void main(String[] args) {
 		SquareSurvivor squareSurvivor = new SquareSurvivor();
@@ -18,7 +18,7 @@ public class SquareSurvivor {
 		panel = new SquareGamePanel();
 		frame.add(panel);
 		frame.addKeyListener(panel);
-		frame.setSize(frameX,frameY);
+		frame.setSize(frameWidth,frameHeight);
 		frame.setVisible(true);
 	
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

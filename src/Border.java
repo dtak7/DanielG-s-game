@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 public class Border extends SquareGameObject implements ActionListener {
 	boolean isActive = false;
-
+	float countdown= 1300;
 	public Border(int x, int y, int width, int height) {
 		super(x, y, width, height);
 		// TODO Auto-generated constructor stub
@@ -27,8 +27,13 @@ public class Border extends SquareGameObject implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		
+		if(countdown==0) {
 		System.out.println("active");
 		isActive = true;
+		}
+		else {
+			countdown--;
+		}
 	}
 }

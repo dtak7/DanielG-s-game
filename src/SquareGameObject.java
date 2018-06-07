@@ -25,7 +25,7 @@ public class SquareGameObject {
 	}
 
 	void draw(Graphics g) {
-	//	g.setColor(Color.red);
+		g.setColor(Color.red);
 		g.drawRect(x, y, width, height);
 	}
 	
