@@ -7,8 +7,11 @@ import javax.imageio.ImageIO;
 
 public class MovingBarrier extends SquareGameObject {
 	public BufferedImage shipImg;
+int ogX;
 	public MovingBarrier(int x, int y, int width, int height) {
+		
 		super(x, y, width, height);
+		ogX=x;
 		// TODO Auto-generated constructor stub
 		try {
 
@@ -23,15 +26,18 @@ public class MovingBarrier extends SquareGameObject {
 		}
 	}
 
-	void draw (Graphics g){
+	void move() {
+
+	}
+
+	void draw(Graphics g) {
 		super.draw(g);
-		if(shipImg==null) {
+		if (shipImg == null) {
 			g.setColor(Color.BLUE);
 			g.fillRect(x, y, width, height);
-			}
-			else {
-				g.drawImage(shipImg, x, y, width, height, null);
-			}
-		
+		} else {
+			g.drawImage(shipImg, x, y, width, height, null);
+		}
+
 	}
 }
