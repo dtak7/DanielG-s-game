@@ -2,10 +2,12 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
 public class Border extends SquareGameObject implements ActionListener {
 	boolean isActive = false;
-	float countdown= 1300;
+	
+	float countDown= 500;
 	public Border(int x, int y, int width, int height) {
 		super(x, y, width, height);
 		// TODO Auto-generated constructor stub
@@ -24,16 +26,19 @@ public class Border extends SquareGameObject implements ActionListener {
 			width++;
 		}
 	}
-
+	void resetCountdown() {	
+	countDown=500;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		if(countdown==0) {
+		if(countDown==0) {
 		System.out.println("active");
 		isActive = true;
 		}
 		else {
-			countdown--;
+			countDown--;
 		}
 	}
 }

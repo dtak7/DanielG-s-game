@@ -10,6 +10,8 @@ import javax.imageio.ImageIO;
 public class Square extends SquareGameObject {
 	public BufferedImage UFOImg;
 boolean isMoving = false;
+boolean isUp,isDown,isLeft,isRight=false;
+int speed=1;
 
 	public Square(int x, int y) {
 
@@ -29,6 +31,22 @@ boolean isMoving = false;
 	}
 
 	
+	void move() {
+		if(isUp) {
+			y-=speed;
+		}
+		if(isDown) {
+			y+=speed;
+		}
+		if(isLeft) {
+			x-=speed;
+			
+		}
+		if(isRight) {
+			x+=speed;
+			System.out.println(x+","+speed);
+		}
+	}
 	void drop() {
 		if (!isMoving) {
 			y++;
