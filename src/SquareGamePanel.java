@@ -38,8 +38,8 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 		barriers.add(new Barriers(190, 0, 240, 470));
 		barriers.add(new Barriers(480, 120, 50, 490));
 		movingBarriers.add(new MovingBarrier(580, 130, 50, 25));
-		movingBarriers.add(new MovingBarrier(540, 230, 50, 25));
-		movingBarriers.add(new MovingBarrier(620, 330, 50, 25));
+		movingBarriers.add(new MovingBarrier(540, 250, 50, 25));
+		movingBarriers.add(new MovingBarrier(620, 380, 50, 25));
 	}
 	void setBorderTimer() {
 		borderTimer = new Timer(100,(border));
@@ -204,6 +204,9 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 		for (Barriers b : barriers) {
 			b.update();
 		}
+		for(MovingBarrier m :movingBarriers) {
+			m.update();
+		}
 		square.update();
 		border.update();
 		for (Barriers b : barriers) {
@@ -223,8 +226,14 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 			square.isAlive=false;
 			endGame();
 		}
+		for(MovingBarrier m :movingBarriers) {
+			
+		if(square.collisionBox.intersects(m.collisionBox)) {
+			square.isAlive=false;
+			endGame();
+		}
 	}
-
+	}
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -247,6 +256,9 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 		// Timer
 		square.move();
 		square.drop();
+		for (MovingBarrier m: movingBarriers ) {
+			m.move();
+		}
 		checkCollision();
 		repaint();
 

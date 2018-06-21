@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 public class MovingBarrier extends SquareGameObject {
 	public BufferedImage shipImg;
 int ogX;
+int speed= 1;
 	public MovingBarrier(int x, int y, int width, int height) {
 		
 		super(x, y, width, height);
@@ -27,7 +28,10 @@ int ogX;
 	}
 
 	void move() {
-
+		x+=speed;
+		if(x>=650||x<=530) {
+			speed*=-1;
+		}
 	}
 
 	void draw(Graphics g) {
