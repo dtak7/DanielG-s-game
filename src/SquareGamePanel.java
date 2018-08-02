@@ -44,6 +44,7 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 	void setBorderTimer() {
 		borderTimer = new Timer(100,(border));
 		borderTimer.start();
+		
 	}
 	public void paintComponent(Graphics g) {
 		if (currentState == MENU_STATE) {
@@ -57,6 +58,7 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 			drawEndState(g);
 		} else if (currentState == WINNING_STATE) {
 			drawWinningState(g);
+		
 		}
 		else if(currentState==INFO_STATE) {
 			drawInfoState(g);
@@ -140,19 +142,20 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 		// System.out.println(e.getKeyCode());
 		// TODO Auto-generated method stub
 
-		System.out.println(e.getKeyCode());
+		//System.out.println(e.getKeyCode());
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			currentState++;
 			if (currentState > END_STATE) {
 
-				square = new Square(20, 100);
+				square.restartSquare();
+				//square = new Square(20, 100);
 				border.width=0;
 				setBorderTimer();
 				border.resetCountdown();
 				border.isActive=false;
 				
 				currentState = MENU_STATE;
-				System.out.println(currentState);
+				//System.out.println(currentState);
 				
 			}
 		}
@@ -178,6 +181,10 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 			square.isDown=true;
 			//square.isMoving = true;
 			
+		}
+		if(e.getKeyCode()==KeyEvent.VK_O) {
+			square.x=600;
+			square.y=450;
 		}
 		
 		if (currentState == GAME_STATE) {
@@ -215,12 +222,13 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 				// System.out.println("death");
 				square.isAlive = false;
 				endGame();
-
+				
 			}
 		}
 		if (square.collisionBox.intersects(lander.collisionBox)) {
 			currentState = WINNING_STATE;
-
+			square.goFaster();
+			square.restartSquare();
 		}
 		if (border.isActive&&square.collisionBox.intersects(border.collisionBox)) {
 			square.isAlive=false;

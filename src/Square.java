@@ -10,11 +10,15 @@ import javax.imageio.ImageIO;
 public class Square extends SquareGameObject {
 	public BufferedImage UFOImg;
 boolean isMoving = false;
+//SquareGamePanel panel = new SquareGamePanel();
 boolean isUp,isDown,isLeft,isRight=false;
-int speed=1;
+private int speedVar = 1;
+private int speed=speedVar;
+
+
 
 	public Square(int x, int y) {
-
+		
 		super(x, y, 40, 40);
 		// TODO Auto-generated constructor stub
 		try {
@@ -29,8 +33,18 @@ int speed=1;
 
 		}
 	}
-
-	
+		void restartSquare() {
+			x=20;
+			y=100;
+			
+		}
+	void goFaster() {
+		speed+=1;
+		System.out.println("faster " +speed);
+	}
+	public void setSpeed(int speed) {
+		this.speed=speed;
+	}
 	void move() {
 		if(isUp) {
 			y-=speed;
@@ -44,7 +58,7 @@ int speed=1;
 		}
 		if(isRight) {
 			x+=speed;
-			System.out.println(x+","+speed);
+			//System.out.println(x+","+speed);
 		}
 	}
 	void drop() {

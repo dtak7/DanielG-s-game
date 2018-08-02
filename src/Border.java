@@ -10,7 +10,7 @@ import javax.imageio.ImageIO;
 public class Border extends SquareGameObject implements ActionListener {
 	boolean isActive = false;
 	public BufferedImage bordershipImg;
-	float countDown= 200;
+	float countDown= 500;
 	public Border(int x, int y, int width, int height) {
 		super(x, y, width, height);
 		// TODO Auto-generated constructor stub
@@ -48,7 +48,7 @@ public class Border extends SquareGameObject implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 		if(countDown==0) {
-		System.out.println("active");
+		//System.out.println("active");
 		isActive = true;
 		}
 		else {
