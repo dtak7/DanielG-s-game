@@ -1,3 +1,4 @@
+import java.applet.AudioClip;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -7,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
+import javax.swing.JApplet;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -29,7 +31,8 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 	Barriers barrier5 = new Barriers(540, 230, 50, 25);
 	Barriers barrier6 = new Barriers(620, 330, 50, 25);*/
 	Lander lander = new Lander(600, 500, 50, 50);
-	
+	AudioClip sound = JApplet.newAudioClip(getClass().getResource("cheerfulSong.wav"));
+	AudioClip sound2 = JApplet.newAudioClip(getClass().getResource("explosion.wav"));
 
 	SquareGamePanel() {
 		timer.start();
@@ -73,6 +76,8 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 	}
 
 	private void drawWinningState(Graphics g) {
+		sound.stop();
+		sound2.stop();
 		g.drawString("You Won :o", 350, 300);
 	}
 	private void drawInfoState(Graphics g) {
@@ -88,6 +93,7 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 
 	private void drawEndState(Graphics g) {
 		// TODO Auto-generated method stub
+		
 		g.setColor(Color.yellow);
 		g.fillRect(0, 0, 700, 600);
 		g.setFont(titleFont);
@@ -100,7 +106,8 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 	private void drawGameState(Graphics g) {
 		// TODO Auto-generated method stub
 		
-		
+		sound2.play();
+	
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, 700, 600);
 		square.draw(g);
@@ -121,11 +128,13 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 
 	private void drawMenuState(Graphics g) {
 		// TODO Auto-generated method stub
+		sound.stop();
+		sound.play();
 		g.setColor(Color.black);
 		g.fillRect(0, 0, 700, 600);
 		g.setColor(Color.GRAY);
 		g.setFont(titleFont);
-		g.drawString("Square Survivor", 250, 300);
+		g.drawString("UFO Survivor", 250, 300);
 		g.setFont(infoFont);
 		g.drawString("hit SHIFT to see further instructions", 300, 450);
 
@@ -146,7 +155,7 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			currentState++;
 			if (currentState > END_STATE) {
-
+			
 				square.restartSquare();
 				//square = new Square(20, 100);
 				border.width=0;
@@ -167,7 +176,8 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 		else {
 		 if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			square.isRight=true;
-			// square.isMoving=true;
+			// square.isMoving=trplayue;
+		
 			
 		}  if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 			square.isLeft=true;
@@ -222,7 +232,7 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 				// System.out.println("death");
 				square.isAlive = false;
 				endGame();
-				
+			
 			}
 		}
 		if (square.collisionBox.intersects(lander.collisionBox)) {
@@ -233,12 +243,14 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 		if (border.isActive&&square.collisionBox.intersects(border.collisionBox)) {
 			square.isAlive=false;
 			endGame();
+			
 		}
 		for(MovingBarrier m :movingBarriers) {
 			
 		if(square.collisionBox.intersects(m.collisionBox)) {
 			square.isAlive=false;
 			endGame();
+			
 		}
 	}
 	}
@@ -257,7 +269,7 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 		}
 		//repaint();
 	}
-
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub

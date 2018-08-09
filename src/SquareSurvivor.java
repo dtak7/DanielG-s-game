@@ -1,3 +1,6 @@
+import java.applet.AudioClip;
+
+import javax.swing.JApplet;
 import javax.swing.JFrame;
 
 public class SquareSurvivor {
@@ -12,6 +15,7 @@ public class SquareSurvivor {
 		squareSurvivor.setup();
 		
 	}
+	
 
 	void setup() {
 		frame = new JFrame();
