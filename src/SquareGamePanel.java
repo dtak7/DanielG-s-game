@@ -30,7 +30,7 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 	/*Barriers barrier4 = new Barriers(580, 130, 50, 25);
 	Barriers barrier5 = new Barriers(540, 230, 50, 25);
 	Barriers barrier6 = new Barriers(620, 330, 50, 25);*/
-	Lander lander = new Lander(600, 500, 50, 50);
+	Lander lander = new Lander(600, 500, 75, 75);
 	AudioClip sound = JApplet.newAudioClip(getClass().getResource("cheerfulSong.wav"));
 	AudioClip sound2 = JApplet.newAudioClip(getClass().getResource("explosion.wav"));
 
@@ -40,9 +40,9 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 		barriers.add(new Barriers(90, 120, 50, 700));
 		barriers.add(new Barriers(190, 0, 240, 470));
 		barriers.add(new Barriers(480, 120, 50, 490));
-		movingBarriers.add(new MovingBarrier(580, 130, 50, 25));
-		movingBarriers.add(new MovingBarrier(540, 250, 50, 25));
-		movingBarriers.add(new MovingBarrier(620, 380, 50, 25));
+		movingBarriers.add(new MovingBarrier(580, 130, 55, 25));
+		movingBarriers.add(new MovingBarrier(540, 250, 55, 25));
+		movingBarriers.add(new MovingBarrier(620, 380, 55, 25));
 	}
 	void setBorderTimer() {
 		borderTimer = new Timer(100,(border));
@@ -55,7 +55,7 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 
 		} else if (currentState == GAME_STATE) {
 			drawGameState(g);
-
+		
 		} else if (currentState == END_STATE) {
 
 			drawEndState(g);
@@ -123,11 +123,13 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 		String count = String.valueOf(border.countDown/100);
 		//count= count.substring(0, 4);
 		g.drawString(count, SquareSurvivor.frameWidth-650, 20);
+	
 	}
 
 
 	private void drawMenuState(Graphics g) {
 		// TODO Auto-generated method stub
+		square.restartSquare();
 		sound.stop();
 		sound.play();
 		g.setColor(Color.black);
@@ -238,7 +240,7 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 		if (square.collisionBox.intersects(lander.collisionBox)) {
 			currentState = WINNING_STATE;
 			square.goFaster();
-			square.restartSquare();
+			square.setSquare();
 		}
 		if (border.isActive&&square.collisionBox.intersects(border.collisionBox)) {
 			square.isAlive=false;

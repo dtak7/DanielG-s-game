@@ -35,7 +35,7 @@ int speed= 1;
 	}
 
 	void draw(Graphics g) {
-		super.draw(g);
+	//	super.draw(g);
 		if (shipImg == null) {
 			g.setColor(Color.BLUE);
 			g.fillRect(x, y, width, height);

@@ -19,7 +19,7 @@ public class Lander extends SquareGameObject {
 	}
 
 	void draw(Graphics g) {
-		super.draw(g);
+	//	super.draw(g);
 		if(PortalImg==null) {
 		g.setColor(Color.WHITE);
 		g.fillRect(x, y, width, height);

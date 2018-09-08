@@ -33,6 +33,9 @@ private int speed=speedVar;
 
 		}
 	}
+		void setSquare() {
+			y=1000;
+		}
 		void restartSquare() {
 			x=20;
 			y=100;
@@ -69,7 +72,7 @@ private int speed=speedVar;
 
 	void draw(Graphics g) {
 
-		super.draw(g);
+	//	super.draw(g);
 		if(UFOImg==null) {
 		g.setColor(Color.GREEN);
 		g.fillRect(x, y, width, height);
