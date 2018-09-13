@@ -45,8 +45,9 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 		movingBarriers.add(new MovingBarrier(620, 380, 55, 25));
 	}
 	void setBorderTimer() {
+		//borderTimer.stop();
 		borderTimer = new Timer(100,(border));
-		borderTimer.start();
+		//borderTimer.start();
 		
 	}
 	public void paintComponent(Graphics g) {
@@ -105,7 +106,8 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 
 	private void drawGameState(Graphics g) {
 		// TODO Auto-generated method stub
-		
+	
+		borderTimer.start();
 		sound2.play();
 	
 		g.setColor(Color.BLACK);
@@ -130,6 +132,7 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 	private void drawMenuState(Graphics g) {
 		// TODO Auto-generated method stub
 		square.restartSquare();
+		
 		sound.stop();
 		sound.play();
 		g.setColor(Color.black);
@@ -161,7 +164,6 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 				square.restartSquare();
 				//square = new Square(20, 100);
 				border.width=0;
-				setBorderTimer();
 				border.resetCountdown();
 				border.isActive=false;
 				
