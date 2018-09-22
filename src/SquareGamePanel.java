@@ -19,7 +19,7 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 	final int WINNING_STATE = 3;
 	final int INFO_STATE = 4;
 	ArrayList<Barriers> barriers = new ArrayList<Barriers>();
-	ArrayList<MovingBarrier>movingBarriers=new ArrayList<MovingBarrier>();
+	ArrayList<MovingBarrier> movingBarriers = new ArrayList<MovingBarrier>();
 	int currentState = MENU_STATE;
 	Font titleFont = new Font("Arial", Font.PLAIN, 48);
 	Font infoFont = new Font("Arial", Font.PLAIN, 20);
@@ -27,9 +27,11 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 	Timer timer = new Timer(1000 / 60, (ActionListener) this);
 	Border border = new Border(0, 0, 0, 700);
 	Timer borderTimer;
-	/*Barriers barrier4 = new Barriers(580, 130, 50, 25);
-	Barriers barrier5 = new Barriers(540, 230, 50, 25);
-	Barriers barrier6 = new Barriers(620, 330, 50, 25);*/
+	/*
+	 * Barriers barrier4 = new Barriers(580, 130, 50, 25); Barriers barrier5 = new
+	 * Barriers(540, 230, 50, 25); Barriers barrier6 = new Barriers(620, 330, 50,
+	 * 25);
+	 */
 	Lander lander = new Lander(600, 500, 75, 75);
 	AudioClip sound = JApplet.newAudioClip(getClass().getResource("cheerfulSong.wav"));
 	AudioClip sound2 = JApplet.newAudioClip(getClass().getResource("explosion.wav"));
@@ -44,27 +46,28 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 		movingBarriers.add(new MovingBarrier(540, 250, 55, 25));
 		movingBarriers.add(new MovingBarrier(620, 380, 55, 25));
 	}
+
 	void setBorderTimer() {
-		//borderTimer.stop();
-		borderTimer = new Timer(100,(border));
-		//borderTimer.start();
-		
+		// borderTimer.stop();
+		borderTimer = new Timer(100, (border));
+		// borderTimer.start();
+
 	}
+
 	public void paintComponent(Graphics g) {
 		if (currentState == MENU_STATE) {
 			drawMenuState(g);
 
 		} else if (currentState == GAME_STATE) {
 			drawGameState(g);
-		
+
 		} else if (currentState == END_STATE) {
 
 			drawEndState(g);
 		} else if (currentState == WINNING_STATE) {
 			drawWinningState(g);
-		
-		}
-		else if(currentState==INFO_STATE) {
+
+		} else if (currentState == INFO_STATE) {
 			drawInfoState(g);
 		}
 
@@ -81,6 +84,7 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 		sound2.stop();
 		g.drawString("You Won :o", 350, 300);
 	}
+
 	private void drawInfoState(Graphics g) {
 		g.setColor(Color.GRAY);
 		g.drawRect(0, 0, SquareSurvivor.frameWidth, SquareSurvivor.frameHeight);
@@ -94,7 +98,7 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 
 	private void drawEndState(Graphics g) {
 		// TODO Auto-generated method stub
-		
+
 		g.setColor(Color.yellow);
 		g.fillRect(0, 0, 700, 600);
 		g.setFont(titleFont);
@@ -106,33 +110,32 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 
 	private void drawGameState(Graphics g) {
 		// TODO Auto-generated method stub
-	
+
 		borderTimer.start();
 		sound2.play();
-	
+
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, 700, 600);
 		square.draw(g);
 		for (Barriers b : barriers) {
 			b.draw(g);
 		}
-		for (MovingBarrier m: movingBarriers ) {
+		for (MovingBarrier m : movingBarriers) {
 			m.draw(g);
 		}
 		lander.draw(g);
 		border.draw(g);
 		g.setFont(infoFont);
-		String count = String.valueOf(border.countDown/100);
-		//count= count.substring(0, 4);
-		g.drawString(count, SquareSurvivor.frameWidth-650, 20);
-	
-	}
+		String count = String.valueOf(border.countDown / 100);
+		// count= count.substring(0, 4);
+		g.drawString(count, SquareSurvivor.frameWidth - 650, 20);
 
+	}
 
 	private void drawMenuState(Graphics g) {
 		// TODO Auto-generated method stub
 		square.restartSquare();
-		
+
 		sound.stop();
 		sound.play();
 		g.setColor(Color.black);
@@ -156,58 +159,59 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 		// System.out.println(e.getKeyCode());
 		// TODO Auto-generated method stub
 
-		//System.out.println(e.getKeyCode());
+		// System.out.println(e.getKeyCode());
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			currentState++;
 			if (currentState > END_STATE) {
-			
+
 				square.restartSquare();
-				//square = new Square(20, 100);
-				border.width=0;
+				// square = new Square(20, 100);
+				border.width = 0;
 				border.resetCountdown();
-				border.isActive=false;
-				
+				border.isActive = false;
+
 				currentState = MENU_STATE;
-				//System.out.println(currentState);
-				
+				// System.out.println(currentState);
+
 			}
-		}
-		else if (e.getKeyCode()==KeyEvent.VK_SHIFT) {
+		} else if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
 			currentState = 4;
-			
+
 		}
 		// moving code
 		else {
-		 if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			square.isRight=true;
-			// square.isMoving=trplayue;
-		
-			
-		}  if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			square.isLeft=true;
-			// square.isMoving=true;-
-			
-		}  if (e.getKeyCode() == KeyEvent.VK_UP) {
-			square.isUp=true;
-			square.isMoving = true;
-			
-		}  if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			square.isDown=true;
-			//square.isMoving = true;
-			
+			if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+				square.isRight = true;
+				// square.isMoving=trplayue;
+
+			}
+			if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+				square.isLeft = true;
+				// square.isMoving=true;-
+
+			}
+			if (e.getKeyCode() == KeyEvent.VK_UP) {
+				square.isUp = true;
+				square.isMoving = true;
+
+			}
+			if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+				square.isDown = true;
+				// square.isMoving = true;
+
+			}
+			if (e.getKeyCode() == KeyEvent.VK_O) {
+				square.x = 600;
+				square.y = 450;
+			}
+
+			if (currentState == GAME_STATE) {
+				checkCollision();
+				checkBounds();
+			}
+
 		}
-		if(e.getKeyCode()==KeyEvent.VK_O) {
-			square.x=600;
-			square.y=450;
-		}
-		
-		if (currentState == GAME_STATE) {
-			checkCollision();
-			checkBounds();
-		}
-		
-	}
-	//	repaint();
+		// repaint();
 	}
 
 	void checkBounds() {
@@ -225,7 +229,7 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 		for (Barriers b : barriers) {
 			b.update();
 		}
-		for(MovingBarrier m :movingBarriers) {
+		for (MovingBarrier m : movingBarriers) {
 			m.update();
 		}
 		square.update();
@@ -236,7 +240,7 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 				// System.out.println("death");
 				square.isAlive = false;
 				endGame();
-			
+
 			}
 		}
 		if (square.collisionBox.intersects(lander.collisionBox)) {
@@ -244,43 +248,45 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 			square.goFaster();
 			square.setSquare();
 		}
-		if (border.isActive&&square.collisionBox.intersects(border.collisionBox)) {
-			square.isAlive=false;
+		if (border.isActive && square.collisionBox.intersects(border.collisionBox)) {
+			square.isAlive = false;
 			endGame();
-			
+
 		}
-		for(MovingBarrier m :movingBarriers) {
-			
-		if(square.collisionBox.intersects(m.collisionBox)) {
-			square.isAlive=false;
-			endGame();
-			
+		for (MovingBarrier m : movingBarriers) {
+
+			if (square.collisionBox.intersects(m.collisionBox)) {
+				square.isAlive = false;
+				endGame();
+
+			}
 		}
 	}
-	}
+
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			square.isRight=false;
+			square.isRight = false;
 		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			square.isLeft=false;
+			square.isLeft = false;
 		} else if (e.getKeyCode() == KeyEvent.VK_UP) {
-			square.isUp=false;
-			square.isMoving=false;
+			square.isUp = false;
+			square.isMoving = false;
 		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			square.isDown=false;
+			square.isDown = false;
 		}
-		//repaint();
+		// repaint();
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		// Timer
 		square.move();
 		square.drop();
-		for (MovingBarrier m: movingBarriers ) {
+		borderTimer.start();
+		for (MovingBarrier m : movingBarriers) {
 			m.move();
 		}
 		checkCollision();
