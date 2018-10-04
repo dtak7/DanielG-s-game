@@ -10,7 +10,7 @@ import javax.imageio.ImageIO;
 public class Border extends SquareGameObject implements ActionListener {
 	boolean isActive = false;
 	public BufferedImage bordershipImg;
-	float countDown= 500;
+	float countDown= 250;
 	public Border(int x, int y, int width, int height) {
 		super(x, y, width, height);
 		// TODO Auto-generated constructor stub
@@ -41,7 +41,7 @@ public class Border extends SquareGameObject implements ActionListener {
 		}
 	}
 	void resetCountdown() {	
-	countDown=500;
+	countDown=250;
 	}
 	
 	@Override

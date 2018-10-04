@@ -90,10 +90,14 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 		g.drawRect(0, 0, SquareSurvivor.frameWidth, SquareSurvivor.frameHeight);
 		g.setColor(Color.BLACK);
 		g.setFont(infoFont);
-		g.drawString("watch out for the border, don't dillydally", 300, 350);
-		g.drawString("use arrow keys to move", 300, 400);
-		g.drawString("enter to restart", 300, 450);
-		g.drawString("hit ENTER to proceed to the game", 300, 500);
+		g.drawString("watch out for the border, don't dillydally", 250, 350);
+		g.drawString("use arrow keys to move (down is an arrow too)", 250, 400);
+		g.drawString("you can press more than one key at once", 250,425);
+		g.drawString("enter to restart", 250, 450);
+		g.drawString("hit ENTER to proceed to the game", 250, 500);
+		g.drawString("if things get rough hit O", 250, 550);
+		g.setFont(null);
+		g.drawString("cheater", 0, 575);
 	}
 
 	private void drawEndState(Graphics g) {
