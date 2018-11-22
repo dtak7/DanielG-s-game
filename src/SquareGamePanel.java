@@ -148,7 +148,7 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 		g.setFont(titleFont);
 		g.drawString("UFO Survivor", 250, 300);
 		g.setFont(infoFont);
-		g.drawString("hit SHIFT to see further instructions", 300, 450);
+		g.drawString("hit CONTROL to see further instructions", 300, 450);
 
 	}
 
@@ -178,7 +178,7 @@ public class SquareGamePanel extends JPanel implements KeyListener, ActionListen
 				// System.out.println(currentState);
 
 			}
-		} else if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
+		} else if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
 			currentState = 4;
 
 		}
